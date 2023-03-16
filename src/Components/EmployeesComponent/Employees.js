@@ -49,29 +49,32 @@ export default function Employees() {
     function handleChange(event) {
         SetInput(event.target.value)
     }
+
     function handleSelectChange(event) {
-    
         SetSelect(event.target.value)
     }
-    function handleAliveFilter(item){
+
+    function handleAliveFilter(item) {
         // console.log(item)
         // console.log(select);
-        switch(select){
+        switch (select) {
             case "All":
                 return item;
             case "Alive":
-                return item.live=="alive";
+                return item.live === "alive";
             case "Dead":
-                return item.live== "dead"
+                return item.live === "dead";
+            default:
         }
     }
-    function deleteFunc(id){
+
+    function deleteFunc(id) {
         // console.log(id);
         // let newUser=first.filter((item)=>item.id!==id)
         // console.log(newUser);
         SetFirst(
-            first.filter((item)=>item.id!==id)
-          );
+            first.filter((item) => item.id !== id)
+        );
     }
 
     return (
@@ -86,11 +89,15 @@ export default function Employees() {
 
 
             {first.filter((item) => +item.id >= +input)
-            .filter(handleAliveFilter)
-            .filter(()=>deleteFunc)
+                .filter(handleAliveFilter)            //????  .filter(handleAliveFilter)   =====    .filter(((item)=>handleAliveFilter(item)))  
+                // .filter(() => deleteFunc)             //????  .filter(() => deleteFunc)    =====    .filter((item) => deleteFunc)
                 .map((item) => {
+
                     return (
-                        <Users key={item.id} users={item} deleteFunc={()=>deleteFunc(item.id)}/>
+                        <Users
+                            key={item.id}
+                            users={item}
+                            deleteFunc={() => deleteFunc(item.id)} />
                     )
                 })}
         </div>

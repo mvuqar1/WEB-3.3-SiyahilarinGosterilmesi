@@ -54,8 +54,8 @@ export default function Employees() {
         SetSelect(event.target.value)
     }
     function handleAliveFilter(item){
-        console.log(item)
-        console.log(select);
+        // console.log(item)
+        // console.log(select);
         switch(select){
             case "All":
                 return item;
@@ -64,6 +64,14 @@ export default function Employees() {
             case "Dead":
                 return item.live== "dead"
         }
+    }
+    function deleteFunc(id){
+        // console.log(id);
+        // let newUser=first.filter((item)=>item.id!==id)
+        // console.log(newUser);
+        SetFirst(
+            first.filter((item)=>item.id!==id)
+          );
     }
 
     return (
@@ -79,9 +87,10 @@ export default function Employees() {
 
             {first.filter((item) => +item.id >= +input)
             .filter(handleAliveFilter)
+            .filter(()=>deleteFunc)
                 .map((item) => {
                     return (
-                        <Users key={item.id} users={item} />
+                        <Users key={item.id} users={item} deleteFunc={()=>deleteFunc(item.id)}/>
                     )
                 })}
         </div>

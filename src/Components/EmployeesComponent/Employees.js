@@ -4,6 +4,7 @@ import Users from './UsersComponent/Users'
 
 export default function Employees() {
     const [input, SetInput] = useState("")
+    const [input2, SetInput2] = useState("")
     const [select, SetSelect] = useState("All")
     const [first, SetFirst] = useState(
         [
@@ -41,6 +42,13 @@ export default function Employees() {
                 "department": "Management",
                 "role": "Office manager",
                 "live": "dead",
+            },
+            {
+                "id": 6,
+                "name": "Vugar",
+                "department": "IT",
+                "role": "Web developer",
+                "live": "alive",
             }
         ]
     )
@@ -48,6 +56,9 @@ export default function Employees() {
 
     function handleChange(event) {
         SetInput(event.target.value)
+    }
+    function handleChange2(event) {
+        SetInput2(event.target.value)
     }
 
     function handleSelectChange(event) {
@@ -81,6 +92,7 @@ export default function Employees() {
         <div>
             <h1 style={{ backgroundColor: "red" }}>Fetch API</h1><br />
             <label>VVOD : <input onChange={handleChange} value={input}></input></label>
+            <label>VVOD PO IMENI : <input onChange={handleChange2} value={input2}></input></label>
             <select onChange={handleSelectChange}>
                 <option>All</option>
                 <option>Alive</option>
@@ -89,6 +101,7 @@ export default function Employees() {
 
 
             {first.filter((item) => +item.id >= +input)
+                .filter((item)=>item.name.toLocaleLowerCase().includes(input2.toLocaleLowerCase()))
                 .filter(handleAliveFilter)            //????  .filter(handleAliveFilter)   =====    .filter(((item)=>handleAliveFilter(item)))  
                 // .filter(() => deleteFunc)             //????  .filter(() => deleteFunc)    =====    .filter((item) => deleteFunc)
                 .map((item) => {

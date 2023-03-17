@@ -74,9 +74,9 @@ export default function Employees() {
         let randomWords = require('random-words');
         event.preventDefault()
         const deadOrLive = ["dead", "alive"]
-        event.target.form.name.value = randomWords(1);
+        event.target.form.name.value = randomWords({ min: 1, max: 5, join: ' '});
         event.target.form.department.value = randomWords(1);
-        event.target.form.role.value = randomWords({ min: 7, max: 15, join: ' '});
+        event.target.form.role.value = randomWords({ min: 6, max: 15, join: ' '});
         event.target.form.live.value = deadOrLive[Math.floor(Math.random() * +deadOrLive.length)];
     }
 

@@ -76,7 +76,7 @@ export default function Employees() {
         const deadOrLive = ["dead", "alive"]
         event.target.form.name.value = randomWords(1);
         event.target.form.department.value = randomWords(1);
-        event.target.form.role.value = randomWords({ min: 3, max: 10, join: ' '});
+        event.target.form.role.value = randomWords({ min: 7, max: 15, join: ' '});
         event.target.form.live.value = deadOrLive[Math.floor(Math.random() * +deadOrLive.length)];
     }
 

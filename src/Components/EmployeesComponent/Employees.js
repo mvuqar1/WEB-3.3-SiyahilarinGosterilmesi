@@ -2,6 +2,8 @@ import React from 'react'
 import { useState } from 'react'
 import Users from './UsersComponent/Users'
 
+
+
 export default function Employees() {
     const [input, SetInput] = useState("")
     const [input2, SetInput2] = useState("")
@@ -45,14 +47,38 @@ export default function Employees() {
             },
             {
                 "id": 6,
-                "name": "Vugar",
+                "name": "Vuqar",
                 "department": "IT",
-                "role": "Web developer",
+                "role": "Web Developer",
                 "live": "alive",
-            }
+            },
+
         ]
     )
 
+    function createHandle(event) {
+        event.preventDefault()
+        const e = event.target
+        // console.log(e.name.value);
+        let newUser = {
+            "id": Math.floor(Math.random() * 10000),
+            "name": e.name.value,
+            "department": e.department.value,
+            "role": e.role.value,
+            "live": e.live.value,
+        }
+        let clone = [...first, newUser]
+        SetFirst(clone)
+    }
+    function randomHandler(event) {
+        let randomWords = require('random-words');
+        event.preventDefault()
+        const deadOrLive = ["dead", "alive"]
+        event.target.form.name.value = randomWords(1);
+        event.target.form.department.value = randomWords(1);
+        event.target.form.role.value = randomWords({ min: 3, max: 10, join: ' '});
+        event.target.form.live.value = deadOrLive[Math.floor(Math.random() * +deadOrLive.length)];
+    }
 
     function handleChange(event) {
         SetInput(event.target.value)
@@ -91,8 +117,19 @@ export default function Employees() {
     return (
         <div>
             <h1 style={{ backgroundColor: "red" }}>Fetch API</h1><br />
-            <label>VVOD : <input onChange={handleChange} value={input}></input></label>
-            <label>VVOD PO IMENI : <input onChange={handleChange2} value={input2}></input></label>
+            <form id='formConainer' onSubmit={createHandle}>
+                <input placeholder='Name' name='name'></input><br />
+                <input placeholder='Department' name='department'></input><br />
+                <input placeholder='Role' name='role'></input><br />
+                <input placeholder='Live' name='live'></input><br />
+
+
+                <button type='submit'>Create</button>
+                <button onClick={randomHandler} type='submit'>Random</button>
+
+            </form>
+            <label>Search by id : <input onChange={handleChange} value={input}></input></label>
+            <label>Search by name : <input onChange={handleChange2} value={input2}></input></label>
             <select onChange={handleSelectChange}>
                 <option>All</option>
                 <option>Alive</option>
@@ -101,7 +138,7 @@ export default function Employees() {
 
 
             {first.filter((item) => +item.id >= +input)
-                .filter((item)=>item.name.toLocaleLowerCase().includes(input2.toLocaleLowerCase()))
+                .filter((item) => item.name.toLocaleLowerCase().includes(input2.toLocaleLowerCase()))
                 .filter(handleAliveFilter)            //????  .filter(handleAliveFilter)   =====    .filter(((item)=>handleAliveFilter(item)))  
                 // .filter(() => deleteFunc)             //????  .filter(() => deleteFunc)    =====    .filter((item) => deleteFunc)
                 .map((item) => {
